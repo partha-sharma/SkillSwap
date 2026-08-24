@@ -35,6 +35,8 @@ public class SkillSwapDbContext : DbContext
             entity.Property(u => u.PasswordHash).IsRequired();
             entity.Property(u => u.BioDetails).HasMaxLength(1000);
             entity.Property(u => u.ProfilePicture).HasMaxLength(500);
+            entity.Property(u => u.PortfolioLinks).HasMaxLength(2000);
+            entity.Property(u => u.RefreshToken).HasMaxLength(200);
             entity.Property(u => u.IsAdmin).HasDefaultValue(false);
             entity.Property(u => u.TrustRating).HasPrecision(3, 2).HasDefaultValue(0m);
         });
@@ -73,6 +75,9 @@ public class SkillSwapDbContext : DbContext
             entity.Property(er => er.Status)
                   .HasConversion<string>()
                   .HasMaxLength(20);
+
+            entity.Property(er => er.LearningGoals).IsRequired();
+            entity.Property(er => er.EstimatedDuration).IsRequired().HasMaxLength(100);
 
             entity.Property(er => er.CreatedAt)
                   .HasDefaultValueSql("(UTC_TIMESTAMP())");

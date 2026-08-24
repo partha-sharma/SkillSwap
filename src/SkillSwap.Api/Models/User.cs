@@ -23,6 +23,14 @@ public class User
     [MaxLength(500)]
     public string? ProfilePicture { get; set; }
 
+    [MaxLength(2000)]
+    public string? PortfolioLinks { get; set; }
+
+    [MaxLength(200)]
+    public string? RefreshToken { get; set; }
+
+    public DateTime? RefreshTokenExpiryTime { get; set; }
+
     public bool IsAdmin { get; set; } = false;
 
     /// <summary>

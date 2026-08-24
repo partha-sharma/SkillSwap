@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkillSwap.Api.Data;
 
@@ -10,9 +11,11 @@ using SkillSwap.Api.Data;
 namespace SkillSwap.Api.Migrations
 {
     [DbContext(typeof(SkillSwapDbContext))]
-    partial class SkillSwapDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260824154432_UpdateModelsForAuthAndExchangeRequests")]
+    partial class UpdateModelsForAuthAndExchangeRequests
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
