@@ -1,28 +1,40 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { LandingPage } from './pages/LandingPage';
+import { Signup } from './pages/auth/Signup';
+import { Login } from './pages/auth/Login';
+import { OnboardingProfile } from './pages/onboarding/OnboardingProfile';
+import { OnboardingSkills } from './pages/onboarding/OnboardingSkills';
+import { StubDashboard } from './pages/dashboard/StubDashboard';
 
-// Placeholder for Mahi to implement Auth views
-function PlaceholderAuth({ title }: { title: string }) {
+function AppRoutes() {
+  const { isAuthenticated } = useAuth();
+  
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="text-center">
-        <h1 className="text-2xl font-display font-bold text-primary-900 mb-2">{title}</h1>
-        <p className="text-gray-600 mb-4">Auth views will be implemented here.</p>
-        <a href="/" className="text-primary-600 hover:underline">Back to Home</a>
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LandingPage />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/login" element={<Login />} />
+      
+      <Route element={<ProtectedRoute />}>
+        <Route path="/onboarding/profile" element={<OnboardingProfile />} />
+        <Route path="/onboarding/skills" element={<OnboardingSkills />} />
+        <Route path="/dashboard" element={<StubDashboard />} />
+      </Route>
+    </Routes>
   );
 }
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/signup" element={<PlaceholderAuth title="Sign Up" />} />
-        <Route path="/login" element={<PlaceholderAuth title="Log In" />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <AppRoutes />
+        <Toaster position="top-right" />
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
